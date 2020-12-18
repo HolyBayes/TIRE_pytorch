@@ -15,7 +15,7 @@ model = TIRE().to(device)
 
 seq_length = 4500
 dim = 1
-ts = np.random.randn((seq_length, dim))
+ts = np.random.randn(seq_length, )
 
 model.fit(ts)
 

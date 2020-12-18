@@ -3,7 +3,7 @@ __author__ = 'Artem Ryzhikov'
 from setuptools import setup
 
 setup(
-    name="pytorch_ard",
+    name="tire_pytorch",
     version='0.1.0',
     description="PyTorch implementation of TIRE for deep change point and anomaly detection in timeseries",
     long_description=open('README.md', encoding='utf-8').read(),
@@ -11,7 +11,7 @@ setup(
     url='https://github.com/HolyBayes/TIRE_pytorch',
     author='Artem Ryzhikov',
 
-    packages=['tire_pytorch'],
+    packages=['TIRE'],
 
     classifiers=[
         'Intended Audience :: Science/Research',
