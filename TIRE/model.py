@@ -213,7 +213,7 @@ class TIRE(nn.Module):
     
     @staticmethod
     def ts_to_windows(ts, window_size):
-        indices = np.arange(ts.shape[0]-window_size+1)
+        indices = np.arange(ts.shape[0])
         shape = indices.shape[:-1] + (indices.shape[-1] - window_size + 1, window_size)
         strides = indices.strides + (indices.strides[-1],)
         indices = np.lib.stride_tricks.as_strided(indices, shape=shape, strides=strides)
