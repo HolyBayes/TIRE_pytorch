@@ -1,9 +1,7 @@
 import numpy as np
-import random
 import matplotlib.pyplot as plt
 from scipy.signal import find_peaks, peak_prominences
 import warnings
-import time, copy
 
 # The code is taken from https://github.com/deryckt/TIRE/blob/master/utils.py
 
