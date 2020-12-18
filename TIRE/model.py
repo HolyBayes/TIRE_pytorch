@@ -216,6 +216,8 @@ class AbstractTIRE(nn.Module):
         self.domain = domain
 
     def fit(self, ts, fit_TD=True, fit_FD=True, **kwargs):
+        if self.__class__.__name__ == 'AbstractTIRE':
+            raise NotImplementedError
         windows_TD = self.ts_to_windows(ts, self.window_size_td)
         if fit_TD:
             print("Training autoencoder for original timeseries")
