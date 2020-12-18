@@ -1,1 +1,1 @@
-from .model import TIRE
+from .model import *

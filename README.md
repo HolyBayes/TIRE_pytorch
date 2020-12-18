@@ -6,7 +6,7 @@
 ## Usage
 
 ```python
-from TIRE import TIRE
+from TIRE import DenseTIRE as TIRE
 import torch
 import numpy as np
 
