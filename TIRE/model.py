@@ -104,7 +104,10 @@ class AbstractAE(nn.Module):
         nr_windows = windows.shape[0]
         for i in range(self.nr_ae):
             new_windows.append(windows[i:nr_windows-self.nr_ae+1+i])
-        return np.transpose(new_windows,(1,0,2))
+        new_windows = np.array(new_windows)
+        if len(new_windows.shape) == 3:
+            return np.transpose(new_windows,(1,0,2))
+        else: return np.transpose(new_windows, (1,0,2,3))
 
 
 class DenseAE(AbstractAE):
@@ -222,8 +225,10 @@ class AbstractTIRE(nn.Module):
         if fit_TD:
             print("Training autoencoder for original timeseries")
             self.AE_TD.fit(windows_TD, **kwargs)
-
-        windows_FD = utils.calc_fft(windows_TD, self.nfft, self.norm_mode)
+        if len(windows_TD.shape) == 3:
+            windows_FD = np.array([utils.calc_fft(windows_TD[:,:,i], self.nfft, self.norm_mode) for i in range(self.input_dim)]).transpose(1,2,0)
+        else:
+            windows_FD = utils.calc_fft(windows_TD, self.nfft, self.norm_mode)
 
         if fit_FD:
             print('Training autoencoder for FFT timeseries')
@@ -231,7 +236,10 @@ class AbstractTIRE(nn.Module):
 
     def predict(self, ts):
         windows_TD = self.ts_to_windows(ts, self.window_size_td)
-        windows_FD = utils.calc_fft(windows_TD, self.nfft, self.norm_mode)
+        if len(windows_TD.shape) == 3:
+            windows_FD = np.array([utils.calc_fft(windows_TD[:,:,i], self.nfft, self.norm_mode) for i in range(self.input_dim)]).transpose(1,2,0)
+        else:
+            windows_FD = utils.calc_fft(windows_TD, self.nfft, self.norm_mode)
         shared_features_TD, shared_features_FD = [ae.encode_windows(windows) for ae, windows in
                                                   [(self.AE_TD, windows_TD), (self.AE_FD, windows_FD)]]
 
