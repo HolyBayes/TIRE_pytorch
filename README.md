@@ -1,4 +1,4 @@
-# PyTorch implementation of TIRE
+# PyTorch implementation of TIRE (UNOFFICIAL)
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 
 **TIRE** is an autoencoder-based change point detection algorithm for time series data that uses a TIme-Invariant Representation (TIRE). More information can be found in the 2020 preprint *Change Point Detection in Time Series Data using Autoencoders with a Time-Invariant Representation*. 
@@ -10,14 +10,14 @@ from TIRE import DenseTIRE as TIRE
 import torch
 import numpy as np
 
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-model = TIRE().to(device)
-
 seq_length = 4500
 dim = 1
-ts = np.random.randn(seq_length, )
+ts = np.random.randn(seq_length, dim)
 
-model.fit(ts)
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+model = TIRE(dim).to(device)
+
+model.fit(ts, epoches=1)
 
 dissimilarities, change_point_scores = model.predict(ts)
 
